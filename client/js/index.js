@@ -31,16 +31,20 @@ class Login {
         if (php_response.conexion == "OK") {
           alert('Me conecte');
           alert(php_response.acceso);
-          if (php_response.acceso == 'concedido') {
-            window.location.href = 'main.html';
-          } else {
-            //alert(php_response.acceso);
-            alert('Contraseña incorrectos, inténtelo de nuevo. ' + php_response.msg);
+          if(php_response.motivo == "email correcto"){
+            if (php_response.acceso == 'concedido') {
+              window.location.href = 'main.html';
+            } else {
+              //alert(php_response.acceso);
+              alert('Contraseña incorrecta, inténtelo de nuevo. ' + php_response.msg);
+            }
+          }else{
+            alert("El usuario ingresado no existe en la base de datos");
           }
         } else {
-          alert("No me conecte. "+php_response.msg);
-          alert("El usuario ingresado no existe en la base de datos");
-        }
+            alert("No me conecte. "+php_response.msg);
+            alert("El usuario ingresado no existe en la base de datos");
+          }
       },
       error: function(php_response){
         console.log(php_response.conexion);

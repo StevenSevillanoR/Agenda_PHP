@@ -99,6 +99,8 @@
         }else $sql .= ' WHERE '.$condicion.';';
         $i++;
       }
+
+      //echo $sql;
       return $this->ejecutarQuery($sql);
     }
 
@@ -141,7 +143,8 @@
     }
 
     function obtenerEventos($id){
-      $sql="SELECT id,title,start,end FROM eventos WHERE usuario_id='".$id."'";
+      $sql="SELECT titulo,fechaInicio,horaInicio,fechaFin,horaFin,fullday 
+            FROM eventos AS e WHERE e.usuario_id='".$id."'";
       return $this->ejecutarQuery($sql);
     }
 

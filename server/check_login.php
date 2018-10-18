@@ -10,14 +10,14 @@
 
   $php_response['conexion'] = $con->initConexion('agenda_db');
 
-  /*if ($response['conexion']=='OK') {
-    $resultado_consulta = $con->consultar(['usuarios'],
-    ['usuario', 'psw'], 'WHERE usuario="'.$_POST['username'].'" AND psw="'.$_POST['password'].'"');
+  ///*//if ($response['conexion']=='OK') {
+    //$resultado_consulta = $con->consultar(['usuarios'],
+    //['usuario', 'psw'], 'WHERE usuario="'.$_POST['username'].'" AND psw="'.$_POST['password'].'"');
 
-    if ($resultado_consulta->num_rows != 0) {
-      $response['acceso'] = 'concedido';
-    }else $response['acceso'] = 'rechazado';
-  }*/
+    //if ($resultado_consulta->num_rows != 0) {
+      //$response['acceso'] = 'concedido';
+    //}else $response['acceso'] = 'rechazado';
+  //}*/
 
   if ($php_response['conexion'] == 'OK') {
 
@@ -25,20 +25,40 @@
 
     while ($rows = $resul->fetch_array()) {
 
-			//echo $rows["psw"];
-			//echo $passw;
+        if(password_verify($passw, $rows["psw"])) {
+          $_SESSION['id'] = $rows["id"];
+          $_SESSION['username']= $rows["usuario"];
 
-			if(password_verify($passw, $rows["psw"])) {
-				$_SESSION['id'] = $rows["id"];
-
-		    $php_response=array("conexion"=>"OK","acceso"=>"concedido", "resul"=>$resul, "email"=>$email,"msg"=>"OK","data"=>"2");
-		 		//echo json_encode($php_response,JSON_FORCE_OBJECT);
-			}else{
-				$php_response=array("conexion"=>"OK","acceso"=>"rechazado", "resul"=>$resul, "email"=>$email,"msg"=>"La contraseña no coincide con la base de datos. Verifique la contraseña para el usuario ".$email,"data"=>"2");
-				//echo json_encode($php_response,JSON_FORCE_OBJECT);
-			}
-			echo json_encode($php_response,JSON_FORCE_OBJECT);
-		}
+          $php_response=array("conexion"=>"OK",
+                              "acceso"=>"concedido", 
+                              "resul"=>$resul, 
+                              "email"=>$email,
+                              "msg"=>"OK",
+                              "motivo"=>"email correcto",
+                              "data"=>"2");
+          //echo json_encode($php_response,JSON_FORCE_OBJECT);
+        }else if($rows['usuario']!=null || $rows['usuario']!=0){
+          $php_response=array("conexion"=>"OK",
+                              "acceso"=>"rechazado", 
+                              "resul"=>$resul, 
+                              "email"=>$email,
+                              "msg"=>"La contraseña no coincide con la base de datos. Verifique la contraseña para el usuario ".$email,
+                              "motivo"=>"email correcto",
+                              "data"=>"2");
+          //echo json_encode($php_response,JSON_FORCE_OBJECT);
+        }else{
+          $php_response=array("conexion"=>"OK",
+                              "acceso"=>"rechazado", 
+                              "resul"=>$resul, 
+                              "email"=>$email,
+                              "msg"=>"El usuario ".$email." ingresado no se encuentra en la base de datos. Ingrese un usuario correcto",
+                              "motivo"=>"email incorrecto",
+                              "data"=>"2");
+        }
+        echo json_encode($php_response,JSON_FORCE_OBJECT);
+      
+    }  
+      
 
     //$resultado_consulta = $con->datosUsuario($_POST['username']);
 
