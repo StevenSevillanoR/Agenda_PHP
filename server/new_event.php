@@ -13,14 +13,16 @@
       $data['horaInicio'] = "'".$_POST['start_hour']."'";
       $data['fechaFin'] = "'".$_POST['end_date']."'";
       $data['horaFin'] = "'".$_POST['end_hour']."'";
+      $data['fullday'] = $_POST['allDay'];
 
-      if ($_POST['end_date'] == "" || $_POST['end_hour'] == ""){
+      /*if ($_POST['end_date'] == "" || $_POST['end_hour'] == "" || $_POST['end_date']==null || $_POST['start_date']==null){
         if ($_POST['allDay'] == false){
-          $data['fullday'] = "'0'";
-        }else if ($_POST['allDay'] == true){
-          $data['fullday'] = "'1'";
+          $data['fullday'] = 0;
+
+        }else{
+          $data['fullday'] = 1;
         }
-      }
+      }*/
       
       $resultado = $con->consultar(['usuarios'],['id'], "WHERE usuario='".$_SESSION['username']."'");
       $fila = $resultado->fetch_assoc();

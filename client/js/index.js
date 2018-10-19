@@ -29,8 +29,8 @@ class Login {
       success: function(php_response){
         console.log(php_response);
         if (php_response.conexion == "OK") {
-          alert('Me conecte');
-          alert(php_response.acceso);
+          //alert('Me conecte');
+          //alert(php_response.acceso);
           if(php_response.motivo == "email correcto"){
             if (php_response.acceso == 'concedido') {
               window.location.href = 'main.html';

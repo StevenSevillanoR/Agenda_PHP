@@ -78,12 +78,12 @@ class EventsManager {
       form_data.append('start_date', $('#start_date').val())
       //form_data.append('allDay', document.getElementById('allDay').checked)
       if (!document.getElementById('allDay').checked) {
-        form_data.append('allDay', false)
+        form_data.append('allDay', 0)
         form_data.append('end_date', $('#end_date').val())
         form_data.append('end_hour', $('#end_hour').val())
         form_data.append('start_hour', $('#start_hour').val())
       }else{
-        form_data.append('allDay', true)
+        form_data.append('allDay', 1)
         form_data.append('end_date', "")
         form_data.append('end_hour', "")
         form_data.append('start_hour', "")
@@ -279,7 +279,7 @@ class EventsManager {
         form_data.append('end_hour', end_hour)
 
         //Evento antes del Drag
-        from_data.append('idP', eventoDrag.id)
+        form_data.append('idP', eventoDrag.id)
         form_data.append('tituloP', eventoDrag.titulo)
         form_data.append('fechaIniP', eventoDrag.fechaIni)
         form_data.append('fechaFinP', eventoDrag.fechaFin)
@@ -300,10 +300,10 @@ class EventsManager {
             console.log(data)
             if (data.msg=="OK" && data.actualizado==true) {
               alert('Se ha actualizado el evento exitosamente')
-              //window.location.reload();
-            }else if(data.msg=="aa" && data.actualizado == false){
+              window.location.reload();
+            }else if(data.msg!="OK" && data.actualizado == false){
               alert(data.msg);
-              //window.location.reload();
+              window.location.reload();
             }else{
               alert("No hay comunicación con el servidor");
               //window.location.reload();

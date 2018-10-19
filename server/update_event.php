@@ -72,13 +72,13 @@
                   $response['id']=$fila['id'];
                   $response['actualizado']=false;
                   $response['msg']="El id que ingreso no se encuentra en la base de datos";
-                  break;
+                  //break;
                 }
               }else{
                 $response['id']=$fila['id'];
                 $response['actualizado']=false;
                 $response['msg']="El id que ingreso no se encuentra en la base de datos";
-                break;
+                //break;
               }
             }else{
               $datosA['fullday']=1;
@@ -99,12 +99,13 @@
               $response['id']=$fila['id'];
               $response['actualizado']=false;
               $response['msg']="El id que ingreso no se encuentra en la base de datos 4";
-              break;
+              //break;
           }
 
         $response['conexion'] = "OK";
-        echo json_encode($response, JSON_FORCE_OBJECT);
+        
       } 
+      echo json_encode($response, JSON_FORCE_OBJECT);
     }else{
       $response['msg'] = "No se pudo conectar a la base de datos";
       //$response['id']=$fila['id'];
@@ -118,5 +119,7 @@
     $response['msg'] = "No se ha iniciado sesión"; 
     //echo json_encode($response, JSON_FORCE_OBJECT);   
   }
+
+  $con->cerrarConexion();
 
 ?>
